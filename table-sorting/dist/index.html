@@ -1,0 +1,129 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Table Sorting</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+	<style>
+		.results-container {
+			padding: 20px 0;
+		}
+		.results-container p {
+			font-weight: 600;
+			font-size: 18px;
+			line-height: 1.5;
+		}
+		.table-header,
+		.table-body {
+			cursor: pointer;
+		}
+		.sort-down:after {
+			display: inline-block;
+			content: '▼';
+			margin-left: 5px;
+		}
+		.sort-up:after {
+			display: inline-block;
+			content: '▲';
+			margin-left: 5px;
+		}
+		.pagination {
+			cursor: pointer;
+		}
+		.form-inline {
+			margin-bottom: 10px;
+		}
+		.info-container__title {
+			margin-bottom: 25px;
+		}
+		.description__title {
+			margin-top: 0;
+		}
+		.info-list {
+			margin-top: 25px;
+		}
+	</style>
+
+</head>
+<body>
+
+	<div id="container" class="container text-center">
+
+		<h1>Выберите набор данных</h1>
+		<div id="btnGroup" class="btn-group">
+			<button type="button" class="btn btn-primary" data-type="small">Маленький</button>
+			<button type="button" class="btn btn-primary" data-type="big">	Большой</button>
+		</div>
+
+		<div id="results" class="results-container"></div>
+		
+	</div>
+
+	<script id="tableTemplate" type="text/x-handlebars-template">
+
+		<form class="form-inline pull-right">
+  		<div class="form-group">
+    		<div class="input-group">
+      		<input type="text" class="form-control" id="searchInput" placeholder="Начните печатать">
+    		</div>
+  		</div>
+  		<button id="searchBtn" type="submit" class="btn btn-primary">Поиск</button>
+		</form>
+
+		<table class="table table-hover">
+			<thead id="tableHeader" class="table-header">
+				<tr>
+					<th class="sort-down" data-sort="id" data-state="down">Id</th>
+					<th class="sort-down" data-sort="firstName" data-state="down">First Name</th>
+					<th class="sort-down" data-sort="lastName" data-state="down">Last Name</th>
+					<th class="sort-down" data-sort="email" data-state="down">Email</th>
+					<th class="sort-down" data-sort="phone" data-state="down">Phone</th>
+				</tr>
+			</thead>
+			<tbody id="tableBody" class="table-body">
+			</tbody>
+		</table>
+		<div id="personInfo" class="jumbotron" style="display: none"></div>
+	</script>
+
+	<script id="tableBodyTemplate" type="text/x-handlebars-template">
+		{{#each list}}
+					<tr>
+						<th>{{id}}</th>
+						<th>{{firstName}}</th>
+						<th>{{lastName}}</th>
+						<th>{{email}}</th>
+						<th>{{phone}}</th>
+					</tr>
+				{{/each}}
+	</script>
+
+	<script id="personDataOutputTemplate" type="text/x-handlebars-template">
+		<h4 class="info-container__title">
+		Выбран пользователь <b>{{firstName}} {{lastName}}</b>
+		</h4>
+		<div class="row">
+			<div class="col-xs-6 text-left">
+				<h5 class="description__title">Описание:</h5>
+				<textarea class="col-xs-12" rows="8">
+					{{description}}
+				</textarea>
+			</div>
+			<div class="col-xs-6">
+				<ul class="list-group text-left info-list">
+					<li class="list-group-item">Адрес проживания: <b>{{adress.streetAddress}}</b></li>
+					<li class="list-group-item">Город: <b>{{adress.city}}</b></li>
+					<li class="list-group-item">Провинция: <b>{{adress.state}}</b></li>
+					<li class="list-group-item">Индекс: <b>{{adress.zip}}</b></li>
+				</ul>
+			</div>
+		</div>
+	</script>
+
+  <script src="build.js"></script>
+</body>
+</html>
